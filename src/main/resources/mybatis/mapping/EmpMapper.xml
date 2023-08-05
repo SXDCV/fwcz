@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.dao.EmpDAO">
+
+    <select id="getLogin" parameterType="EmpEntity" resultType="int">
+        select count(*) from emp where ename=#{ename} and epwd=#{epwd}
+    </select>
+
+    <select id="getOneInfo" parameterType="EmpEntity" resultType="EmpEntity">
+        select * from emp where ename=#{ename} and epwd=#{epwd}
+    </select>
+
+    <!--查询全部-->
+    <select id="getAll" parameterType="EmpEntity" resultType="EmpEntity">
+        select eid,p.id,p.pname,j.jid,j.jname,ename,epwd,erealname,etel,eaddress,eflag,eremark
+        from emp e, dept p, job j where e.id=p.id and e.jid=j.jid
+        order by eid desc limit #{begin},#{pages}
+    </select>
+
+    <!--查询单个-->
+    <select id="empOne" parameterType="int" resultType="EmpEntity">
+        select eid,p.id,p.pname,j.jid,j.jname,ename,epwd,erealname,etel,eaddress,eflag,eremark
+        from emp e, dept p, job j where e.id=p.id and e.jid=j.jid and eid=#{eid}
+    </select>
+
+    <!--删除员工信息-->
+    <delete id="empDel" parameterType="int">
+        delete from emp where eid=#{eid}
+    </delete>
+
+    <!--查询重复项-->
+    <select id="empCkName" parameterType="EmpEntity" resultType="int">
+        select count(*) from emp
+        <where>
+            <if test="ename!=null">
+             and  ename=#{ename}
+            </if>
+            <if test="etel!=null">
+              and  etel=#{etel}
+            </if>
+        </where>
+    </select>
+
+</mapper>

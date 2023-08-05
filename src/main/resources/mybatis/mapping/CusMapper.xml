@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.dao.CusDAO">
+
+    <!--查询全部-->
+    <select id="getAll" parameterType="CusEntity" resultType="CusEntity">
+        select cid,e.eid,e.ename,cname,csex,ctel,cteltwo,ccard from cus c,emp e where c.eid=e.eid
+        order by cid desc limit #{begin},#{pages}
+    </select>
+
+    <!--查询单个-->
+    <select id="cusOne" parameterType="int" resultType="CusEntity">
+        select * from cus where cid=#{cid}
+    </select>
+
+    <!--删除岗位信息-->
+    <delete id="cusDel" parameterType="int">
+        delete from cus where cid=#{cid}
+    </delete>
+
+    <!--查询重复项-->
+    <select id="cusCkName" parameterType="String" resultType="int">
+        select count(*) from cus
+        <where>
+            <if test="ctel!=null">
+                and ctel=#{ctel}
+            </if>
+            <if test="cteltwo!=null">
+                and cteltwo=#{cteltwo}
+            </if>
+            <if test="ccard!=null">
+            and ccard=#{ccard}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.dao.HouseDAO">
+
+    <!--统计条数-->
+    <select id="count" parameterType="HouseEntity" resultType="int">
+        select count(*)
+        from house h,sort s,area a
+        <where>
+            h.sid=s.sid and h.aid=a.aid
+            <if test="sid!=''">
+                and s.sid=#{sid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询全部-->
+    <select id="getAll" parameterType="HouseEntity" resultType="HouseEntity">
+        select hid,s.sid,s.sname,a.aid,a.aname,haddress,hnumber,htype,harea,direction,hmoney,networkmoney,electricmoney,watermoney,gasmoney,electricnumber,
+        waternumber,gesnumber,hname,hremark,himg,hflag
+        from house h,sort s,area a
+        <where>
+            h.sid=s.sid and h.aid=a.aid
+            <if test="sid!=''">
+                and s.sid=#{sid}
+            </if>
+        </where>
+        order by hid desc limit #{begin},#{pages}
+    </select>
+
+    <!--查询单个-->
+    <select id="houseOne" parameterType="int" resultType="HouseEntity">
+        select hid,s.sid,s.sname,a.aid,a.aname,haddress,hnumber,htype,harea,direction,hmoney,networkmoney,electricmoney,watermoney,gasmoney,electricnumber,
+               waternumber,gesnumber,hname,hremark,himg,hflag
+        from house h,sort s,area a where h.sid=s.sid and h.aid=a.aid and hid=#{hid}
+    </select>
+
+    <!--删除员工信息-->
+    <delete id="houseDel" parameterType="int">
+        delete from house where hid=#{hid}
+    </delete>
+
+    <!--查询重复项-->
+    <select id="houseCkName" parameterType="HouseEntity" resultType="int">
+        select count(*) from house
+    </select>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.dao.SortDAO">
+
+    <select id="SortAll" resultType="SortEntity">
+        select * from sort
+    </select>
+
+    <!--查询全部-->
+    <select id="getAll" parameterType="SortEntity" resultType="SortEntity">
+        select * from sort order by sid desc limit #{begin},#{pages}
+    </select>
+
+    <!--查询单个-->
+    <select id="sortOne" parameterType="int" resultType="SortEntity">
+        select * from sort where sid=#{sid}
+    </select>
+
+    <!--删除岗位信息-->
+    <delete id="sortDel" parameterType="int">
+        delete from sort where sid=#{sid}
+    </delete>
+
+    <!--查询重复项-->
+    <select id="sortCkName" parameterType="String" resultType="int">
+        select count(*) from sort where sname=#{sname}
+    </select>
+
+</mapper>

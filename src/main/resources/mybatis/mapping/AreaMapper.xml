@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hu.dao.AreaDAO">
+
+    <!--查询全部-->
+    <select id="getAll" parameterType="AreaEntity" resultType="AreaEntity">
+        select * from area order by aid desc limit #{begin},#{pages}
+    </select>
+
+    <!--查询单个-->
+    <select id="areaOne" parameterType="int" resultType="AreaEntity">
+        select * from area where aid=#{aid}
+    </select>
+
+    <!--删除岗位信息-->
+    <delete id="areaDel" parameterType="int">
+        delete from area where aid=#{aid}
+    </delete>
+
+    <!--查询重复项-->
+    <select id="areaCkName" parameterType="String" resultType="int">
+        select count(*) from area where aname=#{aname}
+    </select>
+
+</mapper>
